@@ -773,7 +773,7 @@ Also in the browser: DevTools → Network → Fetch/XHR on a listing page and a 
 - **Cold start looks like a crash** → waking-up UI + keep-alive + README note.
 - **Prompt injection via scraped text** → passages are data; strip scripts/HTML; no tool execution.
 - **Over-promising Arabic** → label it as bonus; test five prompts; don't claim fluency.
-
+| Empty retrieval returned JSON instead of SSE → frontend hangs on Arabic/gibberish. Always return SSE; expand queries via the gazetteer; skip the LLM call entirely when context is empty (also protects the 50/day cap). |
 ## Appendix D — Submission checklist
 - [ ] URL loads from phone data; 3 EN + 2 AR questions answered with citations
 - [ ] Starter questions cached and instant

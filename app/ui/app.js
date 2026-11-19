@@ -56,6 +56,13 @@ async function sendMessage() {
     textDiv.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
     
     isStreaming = true;
+    const stallTimer = setTimeout(() => {
+    if (isStreaming) {
+        textDiv.textContent = fullText || "⚠️ The model is busy or rate-limited. Please try again in a moment.";
+        isStreaming = false;
+        document.getElementById('sendBtn').disabled = false;
+    }
+}, 25000);
     document.getElementById('sendBtn').disabled = true;
 
     const source = document.getElementById('sourceFilter').value;
@@ -68,6 +75,13 @@ async function sendMessage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message, source })
         });
+        if (!response.headers.get('content-type')?.includes('text/event-stream')) {
+            const j = await response.json().catch(() => ({}));
+            textDiv.textContent = j.answer || "⚠️ Unexpected response.";
+            isStreaming = false; document.getElementById('sendBtn').disabled = false;
+            clearTimeout(stallTimer);
+            return;
+        }
 
         const reader = response.body.getReader();
         const decoder = new TextDecoder();

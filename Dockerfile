@@ -5,7 +5,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 COPY app ./app
 COPY index ./index
-COPY data ./data
 
 # --- Runtime Stage ---
 FROM python:3.11-slim
@@ -14,7 +13,6 @@ WORKDIR /srv
 COPY --from=builder /install /usr/local
 COPY app ./app
 COPY index ./index
-COPY data ./data
 
 USER app
 ENV PORT=8000 PYTHONUNBUFFERED=1
