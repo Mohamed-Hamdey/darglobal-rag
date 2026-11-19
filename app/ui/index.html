@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarGlobal × Wasalt Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="brand">
+                <span class="brand-icon">◆</span> Dar·Wasalt Assistant
+            </div>
+            <div class="controls">
+                <select id="sourceFilter" class="filter-select">
+                    <option value="both">Both</option>
+                    <option value="darglobal">DarGlobal</option>
+                    <option value="wasalt">Wasalt</option>
+                </select>
+                <span id="modelBadge" class="badge">Loading...</span>
+            </div>
+        </header>
+
+        <main id="chatContainer" class="chat-container">
+            <div class="empty-state" id="emptyState">
+                <h2>Ask about DarGlobal & Wasalt</h2>
+                <p>Projects, branded residences, listings, prices, and auctions.</p>
+                <div class="starter-grid">
+                    <button class="starter-btn" data-q="What branded residences does DarGlobal have?">What branded residences exist?</button>
+                    <button class="starter-btn" data-q="What are the typical apartment prices in Riyadh?">Typical apartment prices in Riyadh?</button>
+                    <button class="starter-btn" data-q="Tell me about Trump Tower Jeddah">Tell me about Trump Tower Jeddah</button>
+                    <button class="starter-btn" data-q="ما هي مشاريع دار جلوبال في السعودية؟">ما هي مشاريع دار جلوبال في السعودية؟</button>
+                </div>
+            </div>
+            <div id="messages" class="messages"></div>
+        </main>
+
+        <footer class="composer-area">
+            <div class="composer-wrapper">
+                <textarea id="messageInput" placeholder="Ask a question..." rows="1"></textarea>
+                <button id="sendBtn" class="send-btn">➤</button>
+            </div>
+            <p class="disclaimer">Informational only, not an offer. Prices and specifications are indicative and may change.</p>
+        </footer>
+    </div>
+    <script src="/ui/app.js"></script>
+</body>
+</html>

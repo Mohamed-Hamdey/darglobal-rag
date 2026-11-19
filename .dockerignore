@@ -1,0 +1,13 @@
+.git
+.gitignore
+.env
+.env.example
+data/raw
+__pycache__
+*.pyc
+.venv
+venv
+tests
+scripts
+ingestion
+plan.md
