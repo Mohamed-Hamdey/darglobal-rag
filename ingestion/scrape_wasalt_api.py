@@ -1,4 +1,3 @@
-# ingestion/scrape_wasalt_api.py
 """
 Wasalt API-First Scraper (The Golden Path)
 Hits the internal JSON endpoint directly, bypassing HTML/WAF entirely.

@@ -1,4 +1,3 @@
-# ingestion/scrape_wasalt_search.py
 import asyncio, gzip, hashlib, json, re
 from pathlib import Path
 from datetime import datetime, timezone

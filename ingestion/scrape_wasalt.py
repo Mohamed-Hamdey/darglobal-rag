@@ -1,4 +1,3 @@
-# ingestion/scrape_wasalt_pages.py   pip install httpx trafilatura
 import gzip, hashlib, json, time, xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path

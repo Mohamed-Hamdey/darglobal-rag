@@ -1,4 +1,3 @@
-# app/api/cache.py
 import json, re
 from app.config import STARTER_CACHE_PATH
 from app.core.text_ar import normalize_ar

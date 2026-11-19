@@ -1,4 +1,3 @@
-# scripts/probe_darglobal.py
 import httpx
 import re
 

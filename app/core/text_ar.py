@@ -1,4 +1,3 @@
-# app/core/text_ar.py
 import re, unicodedata
 
 TASHKEEL = re.compile(r'[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]')

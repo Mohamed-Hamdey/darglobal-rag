@@ -1,4 +1,3 @@
-# scripts/seed_cache.py
 import asyncio, json
 from pathlib import Path
 from app.llm.client import stream, verify_models

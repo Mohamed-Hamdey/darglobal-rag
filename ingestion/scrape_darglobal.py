@@ -1,4 +1,3 @@
-# ingestion/scrape_darglobal.py (V2: Curated High-Value Targets)
 import asyncio
 import gzip
 import hashlib

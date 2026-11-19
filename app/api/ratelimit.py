@@ -1,4 +1,3 @@
-# app/api/ratelimit.py
 import time, collections
 from app.config import PER_IP_LIMIT, PER_IP_WINDOW_S, DAILY_LLM_BUDGET
 

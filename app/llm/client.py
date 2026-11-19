@@ -1,4 +1,3 @@
-# app/llm/client.py
 import httpx, json
 from app.config import OPENROUTER_API_KEY, LLM_MODELS
 

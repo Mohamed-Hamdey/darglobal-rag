@@ -1,4 +1,3 @@
-# app/llm/guard.py
 import re
 NUM = re.compile(r'(?:SAR|AED|USD|GBP|ريال|درهم|دولار)\s*([\d,\.]+)|([\d,\.]+)\s*(?:SAR|AED|USD|GBP|ريال|درهم|دولار)', re.I)
 

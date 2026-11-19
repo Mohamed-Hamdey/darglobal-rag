@@ -1,4 +1,3 @@
-# scripts/fetch_wasalt_sitemap.py
 import gzip
 import httpx
 from pathlib import Path

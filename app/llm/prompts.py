@@ -1,4 +1,3 @@
-# app/llm/prompts.py
 SYSTEM = """You are a neutral research assistant for DarGlobal and Wasalt real-estate data.
 
 STRUCTURE (every answer):

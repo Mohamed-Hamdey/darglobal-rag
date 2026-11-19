@@ -1,4 +1,3 @@
-# ingestion/scrape_wasalt_categories.py
 """
 Wasalt category/SEO scraper (V3 expansion).
 Targets server-rendered landing pages (NOT the WAF-blocked /en/property/ path).

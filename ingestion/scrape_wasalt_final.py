@@ -1,4 +1,3 @@
-# ingestion/scrape_wasalt_final.py
 import gzip, random, time, re, json, hashlib
 import xml.etree.ElementTree as ET
 from collections import defaultdict
@@ -14,8 +13,7 @@ OUT_JSONL = PROCESSED_DIR / "wasalt_listings.jsonl"
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-# MAGIC TRICK: The robots.txt explicitly allows this bot. 
-# Using it often bypasses WAF rules that block custom UAs.
+# The robots.txt explicitly allows this bot. 
 UA = "anthropic-ai"
 
 SITEMAP_URL = "https://cdn.wasalt.sa/sitemap/product_sitemap_en_sa.xml.gz"

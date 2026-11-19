@@ -1,4 +1,3 @@
-# app/retrieval/facts.py
 import sqlite3
 from app.config import INDEX_PATH
 

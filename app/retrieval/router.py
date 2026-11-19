@@ -1,4 +1,3 @@
-# app/retrieval/router.py
 import re
 from app.core.text_ar import normalize_ar
 

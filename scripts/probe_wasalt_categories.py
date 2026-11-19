@@ -1,4 +1,3 @@
-# scripts/probe_wasalt_categories.py
 import gzip, httpx, re, json
 import xml.etree.ElementTree as ET
 

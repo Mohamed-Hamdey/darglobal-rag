@@ -1,4 +1,3 @@
-# scripts/test_nextjs_header.py
 import httpx
 
 url = "https://wasalt.sa/en/sale/search?countryId=1&propertyFor=sale&page=2"

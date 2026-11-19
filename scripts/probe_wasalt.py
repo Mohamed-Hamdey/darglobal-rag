@@ -1,4 +1,3 @@
-# scripts/probe_wasalt.py
 import httpx
 import re
 from bs4 import BeautifulSoup

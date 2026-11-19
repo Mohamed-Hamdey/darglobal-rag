@@ -1,4 +1,3 @@
-# ingestion/build_index.py
 import sqlite3
 import json
 import hashlib
@@ -43,7 +42,7 @@ def create_schema(conn):
 
 def process_jsonl(file_path: Path, conn):
     if not file_path.exists():
-        print(f"⚠️ {file_path.name} not found. Skipping.")
+        print(f"{file_path.name} not found. Skipping.")
         return 0, []
         
     cursor = conn.cursor()
@@ -89,7 +88,7 @@ def process_jsonl(file_path: Path, conn):
 
 def compute_aggregates(conn, wasalt_listings: list):
     if not wasalt_listings:
-        print("⚠️ No Wasalt listings with prices found. Skipping aggregate computation.")
+        print("No Wasalt listings with prices found. Skipping aggregate computation.")
         return
         
     cursor = conn.cursor()
@@ -119,7 +118,7 @@ def compute_aggregates(conn, wasalt_listings: list):
         ))
         
     conn.commit()
-    print(f"✅ Computed {fact_id_counter} aggregate fact groups for Wasalt listings.")
+    print(f"Computed {fact_id_counter} aggregate fact groups for Wasalt listings.")
 
 def main():
     print("="*60)
@@ -133,10 +132,10 @@ def main():
     create_schema(conn)
     
     dg_count, _ = process_jsonl(PROCESSED_DIR / "darglobal_pages.jsonl", conn)
-    print(f"✅ Indexed {dg_count} DarGlobal documents.")
+    print(f"Indexed {dg_count} DarGlobal documents.")
     
     wa_count, wa_listings = process_jsonl(PROCESSED_DIR / "wasalt_listings.jsonl", conn)
-    print(f"✅ Indexed {wa_count} Wasalt documents.")
+    print(f"Indexed {wa_count} Wasalt documents.")
     
     compute_aggregates(conn, wa_listings)
     
@@ -150,9 +149,9 @@ def main():
     
     conn.close()
     print("="*60)
-    print(f"🎉 Index built successfully: {DB_PATH}")
-    print(f"   Total chunks: {total_chunks}")
-    print(f"   Total aggregate facts: {total_facts}")
+    print(f"Index built successfully: {DB_PATH}")
+    print(f"Total chunks: {total_chunks}")
+    print(f"Total aggregate facts: {total_facts}")
     print("="*60)
 
 if __name__ == "__main__":

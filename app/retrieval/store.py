@@ -1,4 +1,3 @@
-# app/retrieval/store.py
 import sqlite3, json, re
 from app.config import INDEX_PATH, GAZETTEER_PATH
 from app.core.text_ar import normalize_ar

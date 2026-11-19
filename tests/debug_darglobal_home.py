@@ -1,4 +1,3 @@
-# scripts/debug_darglobal_home.py
 import httpx
 
 url = "https://darglobal.co.uk"

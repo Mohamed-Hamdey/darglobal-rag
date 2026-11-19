@@ -1,4 +1,3 @@
-# scripts/inspect_wasalt_search.py  — ONE page load, no scrolling loops
 import asyncio, gzip, json, re
 from pathlib import Path
 from playwright.async_api import async_playwright
