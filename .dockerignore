@@ -2,14 +2,15 @@
 .gitignore
 .env
 .env.example
-data/raw
-data/processed
 __pycache__
 *.pyc
 .venv
 venv
+data/raw
 tests
 scripts
 ingestion
 plan.md
+design.md
 README.md
+*.md

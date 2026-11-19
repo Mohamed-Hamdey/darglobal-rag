@@ -6,8 +6,8 @@ from app.core.text_ar import normalize_ar
 _cache: dict[str, dict] = {}
 
 def key(q: str, source: str, lang: str) -> str:
-    return f"{source}|{lang}|{re.sub(r'\\W+',' ', normalize_ar(q.lower())).strip()}"
-
+    normalized = re.sub(r"\W+", " ", normalize_ar(q.lower())).strip()
+    return f"{source}|{lang}|{normalized}"
 def load():
     global _cache
     if STARTER_CACHE_PATH.exists():
