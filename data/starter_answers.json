@@ -1,0 +1,618 @@
+{
+ "both|auto|what branded residences does darglobal partner with?": {
+  "answer": "DarGlobal partners with three brands for branded residences:\n\n- **Aston Martin** – The Astera in Ras Al Khaimah, UAE, described as Aston Martin’s first residential project in the Gulf and its entry into branded living [1].\n- **Automobili Lamborghini** – Tierra Viva, a luxury villa development with design inspired by Automobili Lamborghini [2].\n- **Trump** – Trump Golf Villas at AIDA in Muscat, Oman, positioned along the Trump International Championship Golf Course [5].\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "Aston Martin Residences RAK | DarGlobal Branded Living",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/aston-martin",
+    "scraped_at": "2026-11-19T06:28:25.381690+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ba45e0f12c48",
+    "excerpt": "aston martin\nAston Martin Real Estate & Branded Luxury Residences\nDESIGN TAKES THE LEAD\nAston Martin partnered with DarGlobal on The Astera, a Ras Al Khaimah development that brings the marque's first residential project"
+   },
+   {
+    "n": 2,
+    "title": "DarGlobal Appoints Ene Construccion Amaz SL as Main Contractor for Tierra Viva – A Luxury Villa Development with Design Inspired by Automobili Lamborghini",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/press",
+    "scraped_at": "2026-11-19T06:28:19.842136+00:00",
+    "page_type": "marketing",
+    "chunk_id": "07b96e42718f",
+    "excerpt": "Articles And News\nSelect Press\nNov 16, 2026\nDar Global Expands Saudi Arabia Portfolio with New Jeddah Development Valued at SAR 1 Billion\nDar Global, the London-listed international luxury real estate developer, today an"
+   },
+   {
+    "n": 3,
+    "title": "AIDA Properties | Luxury Hilltop Homes in Muscat | DarGlobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/landing-page/aida",
+    "scraped_at": "2026-11-19T06:30:13.318300+00:00",
+    "page_type": "marketing",
+    "chunk_id": "1fcb6ae7e923",
+    "excerpt": "Live Feed\nLive Feed\nWELCOME TO AIDA\n\nOman\n\nan\nexclusive gated\ncommunity\nand\ngolfing destination\nIn the heart of Muscat, nestled in the hilltops 130m above the shores is AIDA, a magnificent gated community and golfing des"
+   },
+   {
+    "n": 4,
+    "title": "DarGlobal | Tokenization",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/tokenization",
+    "scraped_at": "2026-11-19T06:33:43.357605+00:00",
+    "page_type": "marketing",
+    "chunk_id": "a4229c744863",
+    "excerpt": "Tokenization: Investing in the Future, Today\nDarGlobal is evolving how the world invests in luxury real estate. Through blockchain-powered tokenization, we’re making access to high-value properties smarter, more flexible"
+   },
+   {
+    "n": 5,
+    "title": "Trump Golf Villas at AIDA | Luxury Villas Muscat Oman",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/aida-trump-villas",
+    "scraped_at": "2026-11-19T06:29:37.404284+00:00",
+    "page_type": "marketing",
+    "chunk_id": "1d82cfdbffcb",
+    "excerpt": "DOWNLOAD BROCHURE\nBook Unit\nChoose your residence\nLive Feed\nGallery\nTrump Golf Villas\n\nMuscat\n\n|\n\nOman\n130 meters above the Muscat Riviera.\nTrump Golf Villas positioned along the Trump International Championship Golf Cou"
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "wasalt|auto|typical apartment prices in riyadh?": {
+  "answer": "I couldn't find apartment prices for Riyadh in the collected data. The available Riyadh data covers land for sale only: 5 listings with a median price of 884,800 SAR and an average of 1,941,590 SAR [F1]. Apartment listings in the data are for Jeddah, not Riyadh [1][2].\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "Apartment with 4 Bedrooms",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/apartment-with-4-bedrooms-5807535",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "4cbf9f063091",
+    "excerpt": ""
+   },
+   {
+    "n": 2,
+    "title": "Apartment with 4 Bedrooms",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/apartment-with-4-bedrooms-5807541",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "accfaef5af0e",
+    "excerpt": ""
+   },
+   {
+    "n": 3,
+    "title": "Land 410 SQM",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-410-sqm-5972734",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "608e22e96727",
+    "excerpt": ""
+   },
+   {
+    "n": 4,
+    "title": "Land 450 SQM Facing East on 60m Width Street",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-450-sqm-facing-east-on-60m-width-street-5972736",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "7a49d69673fe",
+    "excerpt": ""
+   },
+   {
+    "n": 5,
+    "title": "Land 375 SQM Facing East on 12m Width Street",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-375-sqm-facing-east-on-12m-width-street-5972711",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "c56f3876a896",
+    "excerpt": ""
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "darglobal|auto|tell me about trump tower jeddah": {
+  "answer": "• Trump Tower Jeddah is a 47-floor Trump-branded seafront residential tower on the Jeddah Corniche, Saudi Arabia, developed by DarGlobal [1].  \n• It offers apartments and penthouses ranging from 70 to 365 sqm across one- to four-bedroom configurations [1].  \n• All residences feature uninterrupted Red Sea views [1].  \n• The tower includes the Trump Private Club, offering residents fine dining, a gym, pool, cigar lounge, and 24/7 concierge [1].  \n• Unit types include 1, 2, 3, and 4-bedroom apartments, as well as 3 and 4-bedroom penthouses [1].  \n• The interiors combine modern elegance with timeless sophistication, designed to complement the Red Sea views [1].  \n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "Trump Tower Jeddah | Seafront Residences by DarGlobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/trump-tower-jeddah",
+    "scraped_at": "2026-11-19T09:50:07.004071+00:00",
+    "page_type": "marketing",
+    "chunk_id": "4c61bbc7547a",
+    "excerpt": "Download Brochure\nBook Unit\nchoose your residence\nGallery\nTrump Tower Jeddah\n\nSaudi Arabia\n\nTrump Tower Jeddah is a 47-floor Trump-branded seafront residential tower on the Jeddah Corniche, developed by DarGlobal. Apartm"
+   },
+   {
+    "n": 2,
+    "title": "Hospitality  - Dar Global",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/hospitality",
+    "scraped_at": "2026-11-19T09:53:03.829236+00:00",
+    "page_type": "marketing",
+    "chunk_id": "29f26732bc0f",
+    "excerpt": "HOSPITALITY, REVISITED\nCRAFTING EXPERIENCES THAT STAY\nWelcome to the next chapter in remarkable living. DarGlobal is extending our residential vision into a premium portfolio of branded hotels, world-class golf resorts, "
+   },
+   {
+    "n": 3,
+    "title": "Join DarGlobal | Luxury Real Estate",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/become-a-broker",
+    "scraped_at": "2026-11-19T09:55:25.657376+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ba71f0f24ecc",
+    "excerpt": "join our brokers’ networK\nTrump International Hotel & Tower, Dubai\nMARRIOTT RESIDENCES, AIDA, OMAN\ntrump tower, jeddah\nSUBMIT\nBENEFITS FOR YOU as a darglobal agent\nGain global exposure\nWe provide rescue loans or purchase"
+   },
+   {
+    "n": 4,
+    "title": "DarGlobal Appoints Ene Construccion Amaz SL as Main Contractor for Tierra Viva – A Luxury Villa Development with Design Inspired by Automobili Lamborghini",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/press",
+    "scraped_at": "2026-11-19T09:49:01.109059+00:00",
+    "page_type": "marketing",
+    "chunk_id": "07b96e42718f",
+    "excerpt": "Articles And News\nSelect Press\nNov 16, 2026\nDar Global Expands Saudi Arabia Portfolio with New Jeddah Development Valued at SAR 1 Billion\nDar Global, the London-listed international luxury real estate developer, today an"
+   },
+   {
+    "n": 5,
+    "title": "Who develops Trump International Hotel properties in Dubai?",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/insights/trump-international-hotel-dubai",
+    "scraped_at": "2026-11-19T09:52:54.967644+00:00",
+    "page_type": "marketing",
+    "chunk_id": "89b0f2bb483c",
+    "excerpt": "Home\nInsights\nWho develops Trump International Hotel properties in Dubai?\nWho develops Trump International Hotel properties in Dubai?\nLast updated:\n\n2025-12-23\nSummary:\nDarGlobal is the developer responsible for the new "
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "both|auto|ما هي مشاريع دار جلوبال في السعوديه؟": {
+  "answer": "وفقًا للمقتطفات المتوفرة، لدى دار جلوبال مشروع واحد في السعودية تم الإعلان عنه: تطوير جديد في جدة، المملكة العربية السعودية، بقيمة إجمالية تقديرية للتطوير (GDV) تبلغ حوالي مليار ريال سعودي (267 مليون دولار أمريكي). [2]\n\nلا توجد مشاريع أخرى في السعودية مذكورة في البيانات المقدمة.\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "Aston Martin Residences RAK | DarGlobal Branded Living",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/aston-martin",
+    "scraped_at": "2026-11-19T06:28:25.381690+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ba45e0f12c48",
+    "excerpt": "aston martin\nAston Martin Real Estate & Branded Luxury Residences\nDESIGN TAKES THE LEAD\nAston Martin partnered with DarGlobal on The Astera, a Ras Al Khaimah development that brings the marque's first residential project"
+   },
+   {
+    "n": 2,
+    "title": "DarGlobal Appoints Ene Construccion Amaz SL as Main Contractor for Tierra Viva – A Luxury Villa Development with Design Inspired by Automobili Lamborghini",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/press",
+    "scraped_at": "2026-11-19T06:28:19.842136+00:00",
+    "page_type": "marketing",
+    "chunk_id": "07b96e42718f",
+    "excerpt": "Articles And News\nSelect Press\nNov 16, 2026\nDar Global Expands Saudi Arabia Portfolio with New Jeddah Development Valued at SAR 1 Billion\nDar Global, the London-listed international luxury real estate developer, today an"
+   },
+   {
+    "n": 3,
+    "title": "Terms and Conditions - DarGlobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/terms-conditions",
+    "scraped_at": "2026-11-19T06:33:33.494210+00:00",
+    "page_type": "marketing",
+    "chunk_id": "14ee7e644c48",
+    "excerpt": "Terms & Conditions\nIntroduction\nUse of Information\nNo Warranty\nSubmission\nUser Conduct Guidelines\nIntellectual Property Rights\nDisclaimer\nLimitation of Liability\nIndemnity\nGoverning Law and Jurisdiction\nPrivacy Policy\nAc"
+   },
+   {
+    "n": 4,
+    "title": "Who develops Trump International Hotel properties in Dubai?",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/insights/trump-international-hotel-dubai",
+    "scraped_at": "2026-11-19T06:32:35.358944+00:00",
+    "page_type": "marketing",
+    "chunk_id": "89b0f2bb483c",
+    "excerpt": "Home\nInsights\nWho develops Trump International Hotel properties in Dubai?\nWho develops Trump International Hotel properties in Dubai?\nLast updated:\n\n2025-12-23\nSummary:\nDarGlobal is the developer responsible for the new "
+   },
+   {
+    "n": 5,
+    "title": "Invest in Trump International Hotel Oman | DarGlobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/aida-trump-international-hotel",
+    "scraped_at": "2026-11-19T06:29:14.952872+00:00",
+    "page_type": "marketing",
+    "chunk_id": "549ee9006a96",
+    "excerpt": "DOWNLOAD BROCHURE\nBOOK UNIT\nChoose your residence\nLive Feed\nGallery\nTrump International Hotel, Oman\n\nMuscat\n\n|\n\nOman - AIDA\nOwning in a room within Trump Hotels puts you at the heart of it all with expert management and "
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "wasalt|auto|how do wasalt listings break down by city?": {
+  "answer": "Based on the provided passages, Wasalt listings break down by city as follows:\n\n- Juwatha: 2 listings ([1], [2])\n- Jazan: 1 listing ([3])\n- Jeddah: 2 listings ([4], [5])\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "Assets 1",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/undefined-5976435",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "011cd4e2e957",
+    "excerpt": ""
+   },
+   {
+    "n": 2,
+    "title": "Asset 2",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/undefined-5976436",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "a207e1684810",
+    "excerpt": ""
+   },
+   {
+    "n": 3,
+    "title": "Land 496 SQM",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-496-sqm-5974405",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "cd50e0fd27ad",
+    "excerpt": ""
+   },
+   {
+    "n": 4,
+    "title": "Apartment with 4 Bedrooms",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/apartment-with-4-bedrooms-5807535",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "4cbf9f063091",
+    "excerpt": ""
+   },
+   {
+    "n": 5,
+    "title": "Apartment with 4 Bedrooms",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/apartment-with-4-bedrooms-5807541",
+    "scraped_at": "2026-11-19T07:22:26.175695+00:00",
+    "page_type": "listing",
+    "chunk_id": "accfaef5af0e",
+    "excerpt": ""
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "darglobal|auto|what is darglobal's investment focus?": {
+  "answer": "Dar Global Capital Partners (DGCP), DarGlobal’s alternative asset management arm, focuses on deploying capital across international real estate markets through a dedicated cross-border mandate spanning the GCC, Europe, the United Kingdom, and the United States, alongside high-conviction investments in D[1]. DarGlobal also offers blockchain-powered tokenization for fractional ownership of premium properties[5].\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "DarGlobal Appoints Ene Construccion Amaz SL as Main Contractor for Tierra Viva – A Luxury Villa Development with Design Inspired by Automobili Lamborghini",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/press",
+    "scraped_at": "2026-11-19T06:28:19.842136+00:00",
+    "page_type": "marketing",
+    "chunk_id": "07b96e42718f",
+    "excerpt": "Articles And News\nSelect Press\nNov 16, 2026\nDar Global Expands Saudi Arabia Portfolio with New Jeddah Development Valued at SAR 1 Billion\nDar Global, the London-listed international luxury real estate developer, today an"
+   },
+   {
+    "n": 2,
+    "title": "Aston Martin Residences RAK | DarGlobal Branded Living",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/aston-martin",
+    "scraped_at": "2026-11-19T06:28:25.381690+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ba45e0f12c48",
+    "excerpt": "aston martin\nAston Martin Real Estate & Branded Luxury Residences\nDESIGN TAKES THE LEAD\nAston Martin partnered with DarGlobal on The Astera, a Ras Al Khaimah development that brings the marque's first residential project"
+   },
+   {
+    "n": 3,
+    "title": "Hospitality  - Dar Global",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/hospitality",
+    "scraped_at": "2026-11-19T06:32:47.266185+00:00",
+    "page_type": "marketing",
+    "chunk_id": "29f26732bc0f",
+    "excerpt": "HOSPITALITY, REVISITED\nCRAFTING EXPERIENCES THAT STAY\nWelcome to the next chapter in remarkable living. DarGlobal is extending our residential vision into a premium portfolio of branded hotels, world-class golf resorts, "
+   },
+   {
+    "n": 4,
+    "title": "Invest in Trump International Hotel Oman | DarGlobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/aida-trump-international-hotel",
+    "scraped_at": "2026-11-19T06:29:14.952872+00:00",
+    "page_type": "marketing",
+    "chunk_id": "549ee9006a96",
+    "excerpt": "DOWNLOAD BROCHURE\nBOOK UNIT\nChoose your residence\nLive Feed\nGallery\nTrump International Hotel, Oman\n\nMuscat\n\n|\n\nOman - AIDA\nOwning in a room within Trump Hotels puts you at the heart of it all with expert management and "
+   },
+   {
+    "n": 5,
+    "title": "DarGlobal | Tokenization",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/tokenization",
+    "scraped_at": "2026-11-19T06:33:43.357605+00:00",
+    "page_type": "marketing",
+    "chunk_id": "a4229c744863",
+    "excerpt": "Tokenization: Investing in the Future, Today\nDarGlobal is evolving how the world invests in luxury real estate. Through blockchain-powered tokenization, we’re making access to high-value properties smarter, more flexible"
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "both|auto|what branded residences does darglobal partner with": {
+  "answer": "DarGlobal partners with the following luxury brands for branded residences:\n\n• **Fendi Casa** – Azure Oceanfront Villas (AIDA, Oman) and DarGlobal Mansions Interiors by Fendi Casa (Wadi Safar, Riyadh, Saudi Arabia) [2]  \n• **Automobili Lamborghini** – Tierra Viva (Benahavís, Spain) and Painite Villas (Benahavís, Spain) [3]  \n• **Pagani** – Da Vinci Tower (Dubai, UAE) and The Pagani Penthouse (Dubai, UAE) [4]  \n• **Aston Martin** – The Astera (Ras Al Khaimah, UAE / Al Marjan Island) [5]  \n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "FAQ - Frequently Asked Questions | Darglobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/faq",
+    "scraped_at": "2026-11-19T09:55:21.038228+00:00",
+    "page_type": "marketing",
+    "chunk_id": "b16342f5df55",
+    "excerpt": "Frequently Asked Questions\nDarGlobal creates luxury properties and branded residences that blend lifestyle, design, and long-term value. Through global partnerships and meticulous craftsmanship, we deliver premium homes "
+   },
+   {
+    "n": 2,
+    "title": "Fendi Casa Interiors Oman | DarGlobal Branded Villas",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/fendi-casa",
+    "scraped_at": "2026-11-19T09:49:44.583873+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ca56380b5732",
+    "excerpt": "Fendi Casa\nFendi Casa Real Estate & Branded Luxury Residences\nLuxury, Redefined\nFendi Casa partnered with DarGlobal on Azure Oceanfront Villas, an AIDA, Oman development that carries a century of Roman design heritage in"
+   },
+   {
+    "n": 3,
+    "title": "Lamborghini - House of Brands",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/lamborghini",
+    "scraped_at": "2026-11-19T09:49:25.047381+00:00",
+    "page_type": "marketing",
+    "chunk_id": "1dd7984c1e39",
+    "excerpt": "lamborghini\nAutomobili Lamborghini Real Estate & Branded Luxury Residences\nA PASSION FOR PERFORMANCE\nAutomobili Lamborghini partnered with DarGlobal on Tierra Viva, a Benahavís development that carries the marque's desig"
+   },
+   {
+    "n": 4,
+    "title": "Pagani Residences | Luxury Residences Dubai by DarGlobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/pagani",
+    "scraped_at": "2026-11-19T09:49:30.630306+00:00",
+    "page_type": "marketing",
+    "chunk_id": "62091d8659a8",
+    "excerpt": "pagani\nPagani Real Estate & Branded Luxury Residences\nAN INVESTMENT IN INNOVATION\nPagani partnered with DarGlobal on the Da Vinci Tower, a Dubai development that pushes the limits of functionality and form. This landmark"
+   },
+   {
+    "n": 5,
+    "title": "Aston Martin Residences RAK | DarGlobal Branded Living",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/aston-martin",
+    "scraped_at": "2026-11-19T09:49:19.560390+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ba45e0f12c48",
+    "excerpt": "aston martin\nAston Martin Real Estate & Branded Luxury Residences\nDESIGN TAKES THE LEAD\nAston Martin partnered with DarGlobal on The Astera, a Ras Al Khaimah development that brings the marque's first residential project"
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "wasalt|auto|typical apartment prices in riyadh": {
+  "answer": "The collected Wasalt data for Riyadh includes apartment rental listings, not apartment sale prices. Observed rental prices are:\n\n• Apartment 50 SQM with 2 Bedrooms in Al-Ezdihar: 60000 SAR [1]\n• Apartment 50 SQM with 1 Bedroom in Al-Yarmuk: 45000 SAR [2]\n• Apartment 50 SQM with 1 Bedroom in Al-Aqeek: 4600 SAR [3]\n• Apartment 150 SQM with 5 Bedrooms in Ad-Duraihemiyah: 45000 SAR [4]\n• Apartment 150 SQM with 5 Bedrooms in Ad-Duraihemiyah: 45000 SAR [5]\n\nNo apartment sale price data was found in the collected facts; the available facts cover land for sale in Riyadh, Jeddah, and Makkah Al Mukarramah [F1]–[F3].\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "Apartment 50 SQM with 2 Bedrooms",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/rent/apartment-50-sqm-with-2-bedrooms-5975156",
+    "scraped_at": "2026-11-19T09:47:04.772112+00:00",
+    "page_type": "listing",
+    "chunk_id": "eb136b8bc10b",
+    "excerpt": "Apartment for Rent in Al-Ezdihar, Riyadh Built up Area: 50 SQM Apartment is located on 1 street The property has 2 bedrooms Apartment has electricity and water Connections Building year: 2022 Price: 60000 SAR"
+   },
+   {
+    "n": 2,
+    "title": "Apartment 50 SQM with 1 Bedroom",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/rent/apartment-50-sqm-with-1-bedroom-5975144",
+    "scraped_at": "2026-11-19T09:47:06.798290+00:00",
+    "page_type": "listing",
+    "chunk_id": "0d6435dafc4c",
+    "excerpt": "Apartment for Rent in Al-Yarmuk, Riyadh Built up Area: 50 SQM Apartment is located on 1 street The property has 1 bedroom Apartment has electricity and water Connections Building year: 2026 Price: 45000 SAR"
+   },
+   {
+    "n": 3,
+    "title": "Apartment 50 SQM with 1 Bedroom",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/rent/apartment-50-sqm-with-1-bedroom-5975130",
+    "scraped_at": "2026-11-19T09:47:06.798290+00:00",
+    "page_type": "listing",
+    "chunk_id": "de8483651255",
+    "excerpt": "Apartment for Rent in Al-Aqeek, Riyadh Built up Area: 50 SQM Apartment is located on 1 street The property has 1 bedroom Apartment has electricity and water Connections Building year: 2022 Price: 4600 SAR"
+   },
+   {
+    "n": 4,
+    "title": "Apartment 150 SQM with 5 Bedrooms",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/rent/apartment-150-sqm-with-5-bedrooms-5974775",
+    "scraped_at": "2026-11-19T09:47:09.710922+00:00",
+    "page_type": "listing",
+    "chunk_id": "8b3a4d218240",
+    "excerpt": "Apartment for Rent in Ad-Duraihemiyah, Riyadh Built up Area: 150 SQM Apartment is located on 1 street The property has 5 bedrooms Apartment has electricity and water Connections Building year: 2016 Price: 45000 SAR"
+   },
+   {
+    "n": 5,
+    "title": "Apartment 150 SQM with 5 Bedrooms",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/rent/apartment-150-sqm-with-5-bedrooms-5974774",
+    "scraped_at": "2026-11-19T09:47:09.710922+00:00",
+    "page_type": "listing",
+    "chunk_id": "82b0f00a65e7",
+    "excerpt": "Apartment for Rent in Ad-Duraihemiyah, Riyadh Built up Area: 150 SQM Apartment is located on 1 street The property has 5 bedrooms Apartment has electricity and water Connections Building year: 2016 Price: 45000 SAR"
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "both|auto|ما هي مشاريع دار جلوبال في السعوديه": {
+  "answer": "بناءً على البيانات المتوفرة، مشاريع دار جلوبال في السعودية تشمل:\n\n• تطوير جديد في جدة، السعودية – مشروع استخدام مختلط بقيمة إجمالية تقديرية للتطوير (GDV) تبلغ حوالي SAR 1 مليار (USD 267 مليون) [1]\n• وادي صفار | الرياض | السعودية – قصور دار جلوبال بتصميم داخلي من فيندي كازا [4]\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "DarGlobal Appoints Ene Construccion Amaz SL as Main Contractor for Tierra Viva – A Luxury Villa Development with Design Inspired by Automobili Lamborghini",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/press",
+    "scraped_at": "2026-11-19T09:49:01.109059+00:00",
+    "page_type": "marketing",
+    "chunk_id": "07b96e42718f",
+    "excerpt": "Articles And News\nSelect Press\nNov 16, 2026\nDar Global Expands Saudi Arabia Portfolio with New Jeddah Development Valued at SAR 1 Billion\nDar Global, the London-listed international luxury real estate developer, today an"
+   },
+   {
+    "n": 2,
+    "title": "DarGlobal | International Luxury Real Estate Developer",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/dg-circle",
+    "scraped_at": "2026-11-19T09:55:12.378224+00:00",
+    "page_type": "marketing",
+    "chunk_id": "7844def755c5",
+    "excerpt": "London-listed Luxury Real Estate Developer, Investor & Asset Manager\nGlobal Capital. Enduring Places.\nA London-listed luxury real estate developer, investor, and asset manager creating high-quality communities, landmark "
+   },
+   {
+    "n": 3,
+    "title": "Lamborghini - House of Brands",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/lamborghini",
+    "scraped_at": "2026-11-19T09:49:25.047381+00:00",
+    "page_type": "marketing",
+    "chunk_id": "1dd7984c1e39",
+    "excerpt": "lamborghini\nAutomobili Lamborghini Real Estate & Branded Luxury Residences\nA PASSION FOR PERFORMANCE\nAutomobili Lamborghini partnered with DarGlobal on Tierra Viva, a Benahavís development that carries the marque's desig"
+   },
+   {
+    "n": 4,
+    "title": "Fendi Casa Interiors Oman | DarGlobal Branded Villas",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/fendi-casa",
+    "scraped_at": "2026-11-19T09:49:44.583873+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ca56380b5732",
+    "excerpt": "Fendi Casa\nFendi Casa Real Estate & Branded Luxury Residences\nLuxury, Redefined\nFendi Casa partnered with DarGlobal on Azure Oceanfront Villas, an AIDA, Oman development that carries a century of Roman design heritage in"
+   },
+   {
+    "n": 5,
+    "title": "Aston Martin Residences RAK | DarGlobal Branded Living",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/aston-martin",
+    "scraped_at": "2026-11-19T09:49:19.560390+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ba45e0f12c48",
+    "excerpt": "aston martin\nAston Martin Real Estate & Branded Luxury Residences\nDESIGN TAKES THE LEAD\nAston Martin partnered with DarGlobal on The Astera, a Ras Al Khaimah development that brings the marque's first residential project"
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "wasalt|auto|how do wasalt listings break down by city": {
+  "answer": "• King Abdullah Economic City: 2 listings ([1], [2])\n• Riyadh: 2 listings ([3], [4])\n• Alfawaruh: 1 listing ([5])\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "Land 778.8 SQM Facing South on 15m Width Street",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-7788-sqm-facing-south-on-15m-width-street-5968047",
+    "scraped_at": "2026-11-19T09:47:02.707257+00:00",
+    "page_type": "listing",
+    "chunk_id": "8ea0e756ac19",
+    "excerpt": "Land for Sale in King Abdullah Economic, King Abdullah Economic City Land Area: 778.8 SQM Land is located on 1 street, South with 15 m width Land has electricity and water Connections Price: 700920 SAR"
+   },
+   {
+    "n": 2,
+    "title": "Land 582 SQM Facing North West on 15m Width Street",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-582-sqm-facing-north-west-on-15m-width-street-5974842",
+    "scraped_at": "2026-11-19T09:46:55.476579+00:00",
+    "page_type": "listing",
+    "chunk_id": "5fca419854c9",
+    "excerpt": "Land for Sale in King Abdullah Economic, King Abdullah Economic City Land Area: 582 SQM Land is located on 1 street, North West with 15 m width Land has electricity and water Connections Price: 4981920 SAR"
+   },
+   {
+    "n": 3,
+    "title": "Land 756 SQM Facing North on 25m Width Street",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-756-sqm-facing-north-on-25m-width-street-5968711",
+    "scraped_at": "2026-11-19T09:47:02.707257+00:00",
+    "page_type": "listing",
+    "chunk_id": "f5186b5ec35f",
+    "excerpt": "لايوجد"
+   },
+   {
+    "n": 4,
+    "title": "Land 462.87 SQM Facing North on 25m Width Street",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-46287-sqm-facing-north-on-25m-width-street-5974293",
+    "scraped_at": "2026-11-19T09:46:52.934866+00:00",
+    "page_type": "listing",
+    "chunk_id": "7f728333bc91",
+    "excerpt": "لا يوجد"
+   },
+   {
+    "n": 5,
+    "title": "Land 230.722 SQM Facing North East on 15m Width Street",
+    "company": "Wasalt",
+    "url": "https://wasalt.sa/en/property/sale/land-230722-sqm-facing-north-east-on-15m-width-street-5971005",
+    "scraped_at": "2026-11-19T09:46:57.597203+00:00",
+    "page_type": "listing",
+    "chunk_id": "82961266e94f",
+    "excerpt": "لا يوجد"
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ },
+ "darglobal|auto|what is darglobal s investment focus": {
+  "answer": "DarGlobal's investment focus includes:\n\n- Deploying capital across international real estate markets through a dedicated cross-border mandate spanning the GCC, Europe, the United Kingdom, and the United States [3]\n- High-conviction investments in Dubai [3]\n- Luxury real estate development, investment, and asset management across premier global markets, including the UAE, Saudi Arabia, Qatar, Spain, and London [1]\n- High-quality communities, landmark destinations, and lifestyle-driven assets spanning premium hospitality, commercial, entertainment, and exclusive golf communities [1]\n- Delivering long-term value through global partnerships, strong fundamentals, and disciplined execution [1]\n- Serving global investors who value ROI, ROE, and ROL [2]\n\nFigures are indicative and subject to change.",
+  "citations": [
+   {
+    "n": 1,
+    "title": "DarGlobal | International Luxury Real Estate Developer",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/dg-circle",
+    "scraped_at": "2026-11-19T09:55:12.378224+00:00",
+    "page_type": "marketing",
+    "chunk_id": "7844def755c5",
+    "excerpt": "London-listed Luxury Real Estate Developer, Investor & Asset Manager\nGlobal Capital. Enduring Places.\nA London-listed luxury real estate developer, investor, and asset manager creating high-quality communities, landmark "
+   },
+   {
+    "n": 2,
+    "title": "FAQ - Frequently Asked Questions | Darglobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/faq",
+    "scraped_at": "2026-11-19T09:55:21.038228+00:00",
+    "page_type": "marketing",
+    "chunk_id": "b16342f5df55",
+    "excerpt": "Frequently Asked Questions\nDarGlobal creates luxury properties and branded residences that blend lifestyle, design, and long-term value. Through global partnerships and meticulous craftsmanship, we deliver premium homes "
+   },
+   {
+    "n": 3,
+    "title": "DarGlobal Appoints Ene Construccion Amaz SL as Main Contractor for Tierra Viva – A Luxury Villa Development with Design Inspired by Automobili Lamborghini",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/press",
+    "scraped_at": "2026-11-19T09:49:01.109059+00:00",
+    "page_type": "marketing",
+    "chunk_id": "07b96e42718f",
+    "excerpt": "Articles And News\nSelect Press\nNov 16, 2026\nDar Global Expands Saudi Arabia Portfolio with New Jeddah Development Valued at SAR 1 Billion\nDar Global, the London-listed international luxury real estate developer, today an"
+   },
+   {
+    "n": 4,
+    "title": "Pagani Residences | Luxury Residences Dubai by DarGlobal",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/pagani",
+    "scraped_at": "2026-11-19T09:49:30.630306+00:00",
+    "page_type": "marketing",
+    "chunk_id": "62091d8659a8",
+    "excerpt": "pagani\nPagani Real Estate & Branded Luxury Residences\nAN INVESTMENT IN INNOVATION\nPagani partnered with DarGlobal on the Da Vinci Tower, a Dubai development that pushes the limits of functionality and form. This landmark"
+   },
+   {
+    "n": 5,
+    "title": "Fendi Casa Interiors Oman | DarGlobal Branded Villas",
+    "company": "DarGlobal",
+    "url": "https://darglobal.co.uk/partners/fendi-casa",
+    "scraped_at": "2026-11-19T09:49:44.583873+00:00",
+    "page_type": "marketing",
+    "chunk_id": "ca56380b5732",
+    "excerpt": "Fendi Casa\nFendi Casa Real Estate & Branded Luxury Residences\nLuxury, Redefined\nFendi Casa partnered with DarGlobal on Azure Oceanfront Villas, an AIDA, Oman development that carries a century of Roman design heritage in"
+   }
+  ],
+  "model": "nvidia/nemotron-3.5-super-vl:free"
+ }
+}
