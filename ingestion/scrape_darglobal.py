@@ -1,4 +1,4 @@
-# ingestion/scrape_darglobal.py (Maximum Stealth)
+# ingestion/scrape_darglobal.py (V2: Curated High-Value Targets)
 import asyncio
 import gzip
 import hashlib
@@ -6,42 +6,49 @@ import json
 import re
 from pathlib import Path
 from datetime import datetime, timezone
-import httpx
 from selectolax.lexbor import LexborHTMLParser
 from playwright.async_api import async_playwright
 
 BASE_URL = "https://darglobal.co.uk"
-SITEMAP_URL = f"{BASE_URL}/sitemap.xml"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 RAW_DIR = Path("data/raw/darglobal")
 PROCESSED_DIR = Path("data/processed")
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-async def get_sitemap_urls() -> list[str]:
-    try:
-        async with httpx.AsyncClient(headers={"User-Agent": USER_AGENT}, follow_redirects=True, timeout=15.0) as client:
-            res = await client.get(SITEMAP_URL)
-            res.raise_for_status()
-            content = res.content
-            if content.startswith(b'\x1f\x8b'):
-                content = gzip.decompress(content)
-            
-            text = content.decode('utf-8')
-            urls = re.findall(r'<loc>(.*?)</loc>', text)
-            
-            # Target high-value pages only to minimize requests and WAF triggers
-            keywords = ['/projects/', '/about', '/investor', '/press', '/trump', '/aida', '/aston']
-            high_value = [u for u in urls if any(k in u for k in keywords)]
-            
-            if not high_value:
-                high_value = [u for u in urls if "darglobal.co.uk" in u and not u.endswith(('.xml', '.pdf', '.png', '.jpg', '.svg'))]
-            
-            print(f"Found {len(high_value)} target URLs. Capping at 20 for MVP.")
-            return high_value[:20]
-    except Exception as e:
-        print(f"❌ Failed to fetch sitemap: {e}")
-        return []
+# Curated high-value URLs (Projects, Brands, Investor, Press)
+TARGET_URLS = [
+    "https://darglobal.co.uk",
+    "https://darglobal.co.uk/about",
+    "https://darglobal.co.uk/investor",
+    "https://darglobal.co.uk/press",
+    "https://darglobal.co.uk/partners/aston-martin",
+    "https://darglobal.co.uk/aida-trump-international-apartments",
+    "https://darglobal.co.uk/trump-tower-jeddah",
+    "https://darglobal.co.uk/aida-coastal-investment-villas",
+    "https://darglobal.co.uk/aida-trump-international-hotel",
+    "https://darglobal.co.uk/aida-trump-international-cliff-villas",
+    "https://darglobal.co.uk/aida-trump-villas",
+    "https://darglobal.co.uk/trump-international-hotel-and-tower-dubai",
+    "https://darglobal.co.uk/landing-page/aida",
+    "https://darglobal.co.uk/one-of-one/trump-penthouse",
+    "https://darglobal.co.uk/rayana/trump-mansions",
+    "https://darglobal.co.uk/rayana/trump-international-qatar",
+    "https://darglobal.co.uk/trump-plaza/executive-residences",
+    "https://darglobal.co.uk/trump-plaza/park-residences",
+    "https://darglobal.co.uk/insights/trump-international-hotel-dubai",
+    "https://darglobal.co.uk/development-management",
+    "https://darglobal.co.uk/hospitality",
+    "https://darglobal.co.uk/luxury-golf-communities",
+    "https://darglobal.co.uk/exclusive-membership",
+    "https://darglobal.co.uk/careers",
+    "https://darglobal.co.uk/get-in-touch",
+    "https://darglobal.co.uk/privacy-policy",
+    "https://darglobal.co.uk/terms-conditions",
+    "https://darglobal.co.uk/why-invest",
+    "https://darglobal.co.uk/tokenization",
+    "https://darglobal.co.uk/sohar-islamic"
+]
 
 async def fetch_and_parse(page, url: str, sem: asyncio.Semaphore):
     async with sem:
@@ -55,9 +62,8 @@ async def fetch_and_parse(page, url: str, sem: asyncio.Semaphore):
                 Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
             """)
             
-            # Use 'networkidle' to ensure JS challenges complete
             await page.goto(url, wait_until="networkidle", timeout=30000)
-            await page.wait_for_timeout(2000) 
+            await page.wait_for_timeout(1500) 
             
             html = await page.content()
             
@@ -88,33 +94,26 @@ async def fetch_and_parse(page, url: str, sem: asyncio.Semaphore):
                 "page_type": "marketing", "url": url, "title": title,
                 "language": "en", "text": text,
                 "scraped_at": datetime.now(timezone.utc).isoformat(),
+                "city": None, "country": None, "property_type": None, 
+                "purpose": None, "currency": None, "price_value": None, 
+                "area_sqm": None, "bedrooms": None, "brand_partner": None
             }
         except Exception as e:
             print(f"  ❌ Error fetching {url}: {e}")
             return None
 
 async def main():
-    urls = await get_sitemap_urls()
-    if not urls: return
-        
-    print(f"Starting Stealth Playwright scrape of {len(urls)} DarGlobal URLs...")
+    print(f"Starting Stealth Playwright scrape of {len(TARGET_URLS)} DarGlobal URLs...")
     async with async_playwright() as p:
         browser = await p.chromium.launch(
             headless=True,
-            args=[
-                '--disable-blink-features=AutomationControlled',
-                '--no-sandbox',
-                '--disable-setuid-sandbox'
-            ]
+            args=['--disable-blink-features=AutomationControlled', '--no-sandbox', '--disable-setuid-sandbox']
         )
-        context = await browser.new_context(
-            user_agent=USER_AGENT,
-            viewport={'width': 1920, 'height': 1080}
-        )
+        context = await browser.new_context(user_agent=USER_AGENT, viewport={'width': 1920, 'height': 1080})
         page = await context.new_page()
         sem = asyncio.Semaphore(1) # Strictly 1 at a time to avoid rate limiting
         
-        tasks = [fetch_and_parse(page, url, sem) for url in urls]
+        tasks = [fetch_and_parse(page, url, sem) for url in TARGET_URLS]
         results = await asyncio.gather(*tasks)
         await browser.close()
         
