@@ -18,38 +18,26 @@ PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
 # Curated high-value URLs (Projects, Brands, Investor, Press)
 TARGET_URLS = [
-    "https://darglobal.co.uk",
-    "https://darglobal.co.uk/about",
-    "https://darglobal.co.uk/investor",
-    "https://darglobal.co.uk/press",
-    "https://darglobal.co.uk/partners/aston-martin",
-    "https://darglobal.co.uk/aida-trump-international-apartments",
-    "https://darglobal.co.uk/trump-tower-jeddah",
-    "https://darglobal.co.uk/aida-coastal-investment-villas",
-    "https://darglobal.co.uk/aida-trump-international-hotel",
-    "https://darglobal.co.uk/aida-trump-international-cliff-villas",
-    "https://darglobal.co.uk/aida-trump-villas",
-    "https://darglobal.co.uk/trump-international-hotel-and-tower-dubai",
-    "https://darglobal.co.uk/landing-page/aida",
-    "https://darglobal.co.uk/one-of-one/trump-penthouse",
-    "https://darglobal.co.uk/rayana/trump-mansions",
-    "https://darglobal.co.uk/rayana/trump-international-qatar",
-    "https://darglobal.co.uk/trump-plaza/executive-residences",
-    "https://darglobal.co.uk/trump-plaza/park-residences",
-    "https://darglobal.co.uk/insights/trump-international-hotel-dubai",
-    "https://darglobal.co.uk/development-management",
-    "https://darglobal.co.uk/hospitality",
-    "https://darglobal.co.uk/luxury-golf-communities",
-    "https://darglobal.co.uk/exclusive-membership",
-    "https://darglobal.co.uk/careers",
-    "https://darglobal.co.uk/get-in-touch",
-    "https://darglobal.co.uk/privacy-policy",
-    "https://darglobal.co.uk/terms-conditions",
-    "https://darglobal.co.uk/why-invest",
-    "https://darglobal.co.uk/tokenization",
-    "https://darglobal.co.uk/sohar-islamic"
+    "https://darglobal.co.uk", "https://darglobal.co.uk/about", "https://darglobal.co.uk/investor",
+    "https://darglobal.co.uk/press", "https://darglobal.co.uk/newsroom", "https://darglobal.co.uk/careers",
+    "https://darglobal.co.uk/partners/aston-martin", "https://darglobal.co.uk/partners/lamborghini",
+    "https://darglobal.co.uk/partners/pagani", "https://darglobal.co.uk/partners/fendi-casa",
+    "https://darglobal.co.uk/aida-trump-international-apartments", "https://darglobal.co.uk/trump-tower-jeddah",
+    "https://darglobal.co.uk/aida-coastal-investment-villas", "https://darglobal.co.uk/aida-trump-international-hotel",
+    "https://darglobal.co.uk/aida-trump-international-cliff-villas", "https://darglobal.co.uk/aida-trump-villas",
+    "https://darglobal.co.uk/trump-international-hotel-and-tower-dubai", "https://darglobal.co.uk/landing-page/aida",
+    "https://darglobal.co.uk/one-of-one/trump-penthouse", "https://darglobal.co.uk/rayana/trump-mansions",
+    "https://darglobal.co.uk/rayana/trump-international-qatar", "https://darglobal.co.uk/trump-plaza/executive-residences",
+    "https://darglobal.co.uk/trump-plaza/park-residences", "https://darglobal.co.uk/insights/trump-international-hotel-dubai",
+    "https://darglobal.co.uk/development-management", "https://darglobal.co.uk/hospitality",
+    "https://darglobal.co.uk/luxury-golf-communities", "https://darglobal.co.uk/exclusive-membership",
+    "https://darglobal.co.uk/get-in-touch", "https://darglobal.co.uk/privacy-policy",
+    "https://darglobal.co.uk/terms-conditions", "https://darglobal.co.uk/why-invest",
+    "https://darglobal.co.uk/tokenization", "https://darglobal.co.uk/sohar-islamic",
+    "https://darglobal.co.uk/locations/saudi-arabia", "https://darglobal.co.uk/locations/uae",
+    "https://darglobal.co.uk/locations/oman", "https://darglobal.co.uk/locations/qatar",
+    "https://darglobal.co.uk/locations/egypt", "https://darglobal.co.uk/locations/uk"
 ]
-
 async def fetch_and_parse(page, url: str, sem: asyncio.Semaphore):
     async with sem:
         try:
