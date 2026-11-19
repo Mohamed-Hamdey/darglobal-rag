@@ -25,6 +25,8 @@ const I18N = {
     copied: "Copied",
     regen: "Regenerate",
     stopped: "Response stopped.",
+    thinking: "Consulting verified records — free research models may queue briefly.",
+
     waking: "Initializing Engine",
     waking_txt: "The server is waking from standby. First inquiry may take up to a minute.",
     err_title: "Inquiry Interrupted",
@@ -91,6 +93,7 @@ const I18N = {
     err_txt: "لم يتمكن المساعد من إكمال هذا الاستفسار.",
     retry: "إعادة المحاولة",
     open: "فتح المصدر الأصلي",
+    thinking: "جارٍ مراجعة السجلات الموثّقة — قد يتأثر الرد مؤقتاً بطول قائمة النماذج المجانية.",
     no_excerpt: "اضغط أدناه للاطلاع على السجل الأصلي الكامل مباشرة عبر بوابة المصدر.",
     starters: [
       { cat: "مساكن فاخرة", q: "ما هي مساكن العلامات الفاخرة التي تتعاون معها دار جلوبال؟" },

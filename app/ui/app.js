@@ -1,10 +1,16 @@
-const PREFS_KEY = "dar_wasalt_prefs_v1";
+const PREFS_KEY = "dar_wasalt_prefs_v2";
 
 function loadPrefs() {
   try {
-    return JSON.parse(localStorage.getItem(PREFS_KEY)) || {};
+    const raw = JSON.parse(localStorage.getItem(PREFS_KEY)) || {};
+    return {
+      source: ["both", "darglobal", "wasalt"].includes(raw.source) ? raw.source : "both",
+      lang: ["en", "ar"].includes(raw.lang) ? raw.lang : "en",
+      theme: ["dark", "light"].includes(raw.theme) ? raw.theme : "dark",
+      history: Array.isArray(raw.history) ? raw.history.slice(-10) : []
+    };
   } catch {
-    return {};
+    return { source: "both", lang: "en", theme: "dark", history: [] };
   }
 }
 
@@ -13,17 +19,18 @@ function savePrefs() {
     localStorage.setItem(PREFS_KEY, JSON.stringify({
       source: state.source,
       lang: state.lang,
-      theme: state.theme
+      theme: state.theme,
+      history: state.history.slice(-10)
     }));
   } catch { /* ignore storage quota errors */ }
 }
 
 const saved = loadPrefs();
 const state = {
-  source: ["both", "darglobal", "wasalt"].includes(saved.source) ? saved.source : "both",
-  lang: ["en", "ar"].includes(saved.lang) ? saved.lang : "en",
-  theme: ["dark", "light"].includes(saved.theme) ? saved.theme : "dark",
-  history: [],
+  source: saved.source,
+  lang: saved.lang,
+  theme: saved.theme,
+  history: saved.history,
   streaming: false,
   ctrl: null,
   citationsMap: new Map()
@@ -39,7 +46,40 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchMeta();
   wire();
   updateConnectivity();
+  restoreHistory();
 });
+
+function restoreHistory() {
+  if (!state.history.length) return;
+  document.getElementById("hero").classList.add("hidden");
+  document.getElementById("newChatBtn").classList.remove("hidden");
+  const tr = document.getElementById("transcript");
+  tr.classList.remove("hidden");
+
+  let lastAsstHost = null;
+  state.history.forEach(msg => {
+    if (msg.role === "user") {
+      addMsg(msg.content, "user");
+    } else {
+      const host = addMsg("", "assistant", msg.originalQuery || "");
+      const textEl = host.querySelector(".as-text");
+      textEl.innerHTML = renderMarkdown(msg.content);
+
+      const actionsEl = host.querySelector(".as-actions");
+      if (actionsEl && msg.content) {
+        actionsEl.classList.remove("hidden");
+        actionsEl.querySelector(".copy-btn").dataset.raw = msg.content;
+      }
+      if (Array.isArray(msg.citations) && msg.citations.length > 0) {
+        renderCits(host, msg.citations);
+      }
+      lastAsstHost = host;
+    }
+  });
+
+  if (lastAsstHost) renderFollowups(lastAsstHost);
+  autoScroll(true);
+}
 
 function applyTheme(theme) {
   state.theme = theme === "light" ? "light" : "dark";
@@ -91,20 +131,17 @@ async function fetchMeta() {
 }
 
 function wire() {
-  // Theme toggle
   document.getElementById("themeBtn").addEventListener("click", () => {
     applyTheme(state.theme === "dark" ? "light" : "dark");
     savePrefs();
   });
 
-  // Source segmented filter
   document.querySelectorAll(".seg-btn").forEach(b => b.addEventListener("click", () => {
     state.source = b.dataset.src;
     syncControlsFromState();
     savePrefs();
   }));
 
-  // Language switcher
   document.querySelectorAll(".lang-btn").forEach(b => b.addEventListener("click", () => {
     state.lang = b.dataset.lang;
     syncControlsFromState();
@@ -112,11 +149,9 @@ function wire() {
     applyI18n(state.lang);
   }));
 
-  // Reset / New Inquiry
   document.getElementById("resetBtn").addEventListener("click", resetSession);
   document.getElementById("newChatBtn").addEventListener("click", resetSession);
 
-  // Starter cards
   document.getElementById("starters").addEventListener("click", e => {
     const card = e.target.closest(".starter");
     if (!card) return;
@@ -124,7 +159,6 @@ function wire() {
     send();
   });
 
-  // Transcript delegation: inline citations, copy, regenerate, follow-ups
   document.getElementById("transcript").addEventListener("click", async e => {
     const citeBtn = e.target.closest(".cite-inline");
     if (citeBtn) {
@@ -161,7 +195,6 @@ function wire() {
     }
   });
 
-  // Composer auto-resize, empty-state button toggle & submit
   const inp = document.getElementById("input");
   const sendBtn = document.getElementById("sendBtn");
 
@@ -188,7 +221,6 @@ function wire() {
     if (!sendBtn.disabled) send();
   });
 
-  // Scroll-to-bottom floating button
   const main = document.getElementById("main");
   const scrollBtn = document.getElementById("scrollBottomBtn");
   main.addEventListener("scroll", () => {
@@ -198,14 +230,12 @@ function wire() {
   });
   scrollBtn.addEventListener("click", () => autoScroll(true));
 
-  // Source drawer controls
   document.getElementById("drawerClose").addEventListener("click", closeDrawer);
   document.getElementById("drawerBackdrop").addEventListener("click", closeDrawer);
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeDrawer();
   });
 
-  // Network status listeners
   window.addEventListener("online", updateConnectivity);
   window.addEventListener("offline", updateConnectivity);
 }
@@ -224,6 +254,7 @@ function resetSession() {
   if (state.streaming) stop();
   state.history = [];
   state.citationsMap.clear();
+  savePrefs(); // Persist cleared history so reload stays clean
   const tr = document.getElementById("transcript");
   tr.innerHTML = "";
   tr.classList.add("hidden");
@@ -349,8 +380,11 @@ async function send() {
   inp.value = "";
   inp.style.height = "auto";
   addMsg(msg, "user");
+
   state.history.push({ role: "user", content: msg });
-  state.history = state.history.slice(-8);
+  state.history = state.history.slice(-10);
+  savePrefs();
+
   await runChat(msg);
 }
 
@@ -365,10 +399,51 @@ async function runChat(msg) {
   const host = addMsg("", "assistant", msg);
   const textEl = host.querySelector(".as-text");
   const actionsEl = host.querySelector(".as-actions");
-  let full = "", cits = [], warned = null, gotFirst = false, wakeTimer = null;
 
+  let full = "", cits = [], warned = null, gotFirst = false, wakeTimer = null;
   state.ctrl = new AbortController();
-  wakeTimer = setTimeout(() => { if (!gotFirst) showWaking(textEl); }, 3000);
+// Inside runChat(), replace the wakeTimer block with:
+let responseStarted = false;
+const wakingTimer = setTimeout(() => {
+  if (!responseStarted) showWaking(textEl);          // no headers yet → cold start
+}, 3000);
+const thinkingTimer = setTimeout(() => {
+  if (responseStarted && !gotFirst) showThinking(textEl); // headers OK, model queued
+}, 2500);
+
+// Right after: const res = await fetch(...) and before reading body:
+responseStarted = true;
+clearTimeout(wakingTimer);
+
+// On first meta/token event:
+gotFirst = true;
+clearTimeout(wakingTimer); clearTimeout(thinkingTimer);
+hideWaking(textEl);
+
+// Add this helper next to showWaking():
+function showThinking(el) {
+  if (el.querySelector(".notice")) return;
+  el.innerHTML = `<div class="rag-status"><span class="rag-dot"></span><span>${I18N[state.lang].thinking}</span></div>`;
+}
+  // Dynamic RAG Status Indicator
+  const statusEl = document.createElement("div");
+  statusEl.className = "rag-status";
+  const docCount = document.getElementById("st-wa")?.textContent || "300+";
+  const searchLabel = state.lang === "ar"
+    ? `جارٍ البحث في ${docCount} سجل عقاري…`
+    : `Searching ${docCount} indexed records…`;
+  statusEl.innerHTML = `<span class="rag-dot"></span><span class="rag-text">${esc(searchLabel)}</span>`;
+  textEl.innerHTML = "";
+  textEl.appendChild(statusEl);
+
+  const statusTimer = setTimeout(() => {
+    const ragTxt = statusEl.querySelector(".rag-text");
+    if (ragTxt) {
+      ragTxt.textContent = state.lang === "ar"
+        ? "قراءة المصادر وصياغة الإجابة…"
+        : "Reading sources & synthesizing brief…";
+    }
+  }, 1500);
 
   try {
     const res = await fetch("/api/chat", {
@@ -378,7 +453,7 @@ async function runChat(msg) {
         message: msg,
         source: state.source,
         lang: state.lang,
-        history: state.history.slice(0, -1)
+        history: state.history.slice(0, -1).map(h => ({ role: h.role, content: h.content }))
       }),
       signal: state.ctrl.signal
     });
@@ -403,12 +478,17 @@ async function runChat(msg) {
         if (d.type === "meta") {
           gotFirst = true;
           clearTimeout(wakeTimer);
+          clearTimeout(statusTimer);
           hideWaking(textEl);
+          statusEl.remove();
           if (d.cached) addBadge(host, "cached");
         } else if (d.type === "token") {
           gotFirst = true;
           clearTimeout(wakeTimer);
+          clearTimeout(statusTimer);
           hideWaking(textEl);
+          if (statusEl.parentNode) statusEl.remove();
+
           full += d.content;
           textEl.innerHTML = renderMarkdown(full) + '<span class="caret"></span>';
           autoScroll();
@@ -433,14 +513,27 @@ async function runChat(msg) {
       renderFollowups(host);
     }
 
-    state.history.push({ role: "assistant", content: full });
+    state.history.push({
+      role: "assistant",
+      content: full,
+      originalQuery: msg,
+      citations: cits
+    });
+    state.history = state.history.slice(-10);
+    savePrefs();
+
     document.getElementById("announce").textContent = `Answer ready, ${cits.length} sources`;
   } catch (err) {
+    clearTimeout(statusTimer);
+    if (statusEl.parentNode) statusEl.remove();
+
     if (err.name === "AbortError") {
       textEl.innerHTML = renderMarkdown(full) || `<em>${I18N[state.lang].stopped}</em>`;
       if (full) {
         actionsEl.classList.remove("hidden");
         actionsEl.querySelector(".copy-btn").dataset.raw = full;
+        state.history.push({ role: "assistant", content: full, originalQuery: msg, citations: cits });
+        savePrefs();
       }
     } else {
       textEl.innerHTML = `<div class="notice error"><div class="n-title">${I18N[state.lang].err_title}</div>${esc(I18N[state.lang].err_txt)}<div><button type="button" class="retry" data-retry="${esc(msg)}">${I18N[state.lang].retry}</button></div></div>`;
@@ -453,6 +546,7 @@ async function runChat(msg) {
     sendBtn.onclick = null;
     sendBtn.disabled = !document.getElementById("input").value.trim() || !navigator.onLine;
     document.getElementById("loadbar").hidden = true;
+
     host.querySelector(".retry")?.addEventListener("click", e => {
       document.getElementById("input").value = e.target.dataset.retry;
       send();
