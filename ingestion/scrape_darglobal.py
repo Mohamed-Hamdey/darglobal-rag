@@ -36,7 +36,20 @@ TARGET_URLS = [
     "https://darglobal.co.uk/tokenization", "https://darglobal.co.uk/sohar-islamic",
     "https://darglobal.co.uk/locations/saudi-arabia", "https://darglobal.co.uk/locations/uae",
     "https://darglobal.co.uk/locations/oman", "https://darglobal.co.uk/locations/qatar",
-    "https://darglobal.co.uk/locations/egypt", "https://darglobal.co.uk/locations/uk"
+    "https://darglobal.co.uk/locations/egypt", "https://darglobal.co.uk/locations/uk",
+    "https://darglobal.co.uk/newsroom",
+    "https://darglobal.co.uk/insights",
+    "https://darglobal.co.uk/locations/saudi-arabia",
+    "https://darglobal.co.uk/locations/uae",
+    "https://darglobal.co.uk/locations/oman",
+    "https://darglobal.co.uk/locations/qatar",
+    "https://darglobal.co.uk/aida-360",
+    "https://darglobal.co.uk/insignia",
+    "https://darglobal.co.uk/dg-circle",
+    "https://darglobal.co.uk/development-management",
+    "https://darglobal.co.uk/faq",
+    "https://darglobal.co.uk/become-a-broker",
+    "https://darglobal.co.uk/become-an-agent",
 ]
 async def fetch_and_parse(page, url: str, sem: asyncio.Semaphore):
     async with sem:
