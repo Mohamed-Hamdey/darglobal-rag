@@ -13,6 +13,7 @@ WORKDIR /srv
 COPY --from=builder /install /usr/local
 COPY app ./app
 COPY index ./index
+COPY data/gazetteer.json data/starter_answers.json ./data/
 
 USER app
 ENV PORT=8000 PYTHONUNBUFFERED=1

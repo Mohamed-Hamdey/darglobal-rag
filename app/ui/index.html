@@ -1,52 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DarGlobal × Wasalt Assistant</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/ui/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dar·Wasalt Assistant — AI Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/ui/styles.css">
 </head>
 <body>
-    <div class="app-container">
-        <header class="header">
-            <div class="brand">
-                <span class="brand-icon">◆</span> Dar·Wasalt Assistant
-            </div>
-            <div class="controls">
-                <select id="sourceFilter" class="filter-select">
-                    <option value="both">Both</option>
-                    <option value="darglobal">DarGlobal</option>
-                    <option value="wasalt">Wasalt</option>
-                </select>
-                <span id="modelBadge" class="badge">Loading...</span>
-            </div>
-        </header>
+<svg style="display:none">
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 14 14"><path d="M5 2H2v10h10V9M9 1h4v4M13 1L6 8" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+  <symbol id="i-close" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="currentColor"/></symbol>
+</svg>
 
-        <main id="chatContainer" class="chat-container">
-            <div class="empty-state" id="emptyState">
-                <h2>Ask about DarGlobal & Wasalt</h2>
-                <p>Projects, branded residences, listings, prices, and auctions.</p>
-                <div class="starter-grid">
-                    <button class="starter-btn" data-q="What branded residences does DarGlobal have?">What branded residences exist?</button>
-                    <button class="starter-btn" data-q="What are the typical apartment prices in Riyadh?">Typical apartment prices in Riyadh?</button>
-                    <button class="starter-btn" data-q="Tell me about Trump Tower Jeddah">Tell me about Trump Tower Jeddah</button>
-                    <button class="starter-btn" data-q="ما هي مشاريع دار جلوبال في السعودية؟">ما هي مشاريع دار جلوبال في السعودية؟</button>
-                </div>
-            </div>
-            <div id="messages" class="messages"></div>
-        </main>
-
-        <footer class="composer-area">
-            <div class="composer-wrapper">
-                <textarea id="messageInput" placeholder="Ask a question..." rows="1"></textarea>
-                <button id="sendBtn" class="send-btn">➤</button>
-            </div>
-            <p class="disclaimer">Informational only, not an offer. Prices and specifications are indicative and may change.</p>
-        </footer>
+<header class="hdr">
+  <div class="wordmark">
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1l7 7-7 7-7-7z" fill="none" stroke="var(--silver)" stroke-width="1.2"/></svg>
+    <span class="wm-main">DAR·WASALT</span><span class="wm-sub">ASSISTANT</span>
+  </div>
+  <div class="hdr-controls">
+    <div class="seg" role="radiogroup" aria-label="Source filter">
+      <button role="radio" aria-checked="true"  data-src="both" class="seg-btn active"><i class="dot dot-both"></i><span data-i18n="src_both">Both</span></button>
+      <button role="radio" aria-checked="false" data-src="darglobal" class="seg-btn"><i class="dot dot-dar"></i><span data-i18n="src_dar">DarGlobal</span></button>
+      <button role="radio" aria-checked="false" data-src="wasalt" class="seg-btn"><i class="dot dot-wa"></i><span data-i18n="src_wa">Wasalt</span></button>
     </div>
-    <script src="/ui/app.js"></script>
+    <div class="langsw" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="en">English</button><span class="lang-sep">|</span><button class="lang-btn" data-lang="ar">العربية</button>
+    </div>
+  </div>
+</header>
+<div class="loadbar" id="loadbar" hidden></div>
+
+<main class="main" id="main">
+  <section class="hero" id="hero">
+    <p class="eyebrow"><span class="rule"></span><span data-i18n="eyebrow">AI Research Assistant</span></p>
+    <h1 class="hero-h1"><span data-i18n="hero1">Ask about</span> <span class="silver">DarGlobal</span> &amp; <span class="silver">Wasalt</span></h1>
+    <p class="hero-sub" data-i18n="hero_sub">Projects, branded residences, listings, prices and auctions — answered from the sources, with citations.</p>
+    <p class="kwline">PROJECTS&nbsp;|&nbsp;LISTINGS&nbsp;|&nbsp;PRICING&nbsp;|&nbsp;AUCTIONS</p>
+
+    <div class="stats" id="stats">
+      <div class="stat"><span class="stat-n" id="st-pages">—</span><span class="stat-l" data-i18n="st_pages">Pages indexed</span></div>
+      <div class="stat"><span class="stat-n" id="st-wa">—</span><span class="stat-l" data-i18n="st_wa">Wasalt listings</span></div>
+      <div class="stat"><span class="stat-n" id="st-src">2</span><span class="stat-l" data-i18n="st_src">Sources</span></div>
+      <div class="stat"><span class="stat-n" id="st-date">—</span><span class="stat-l" data-i18n="st_date">Data as of</span></div>
+    </div>
+    <p class="stat-note" data-i18n="stat_note">Figures reflect the collected dataset, not live market data.</p>
+
+    <div class="starters" id="starters"></div>
+    <div class="marquee" aria-hidden="true"><div class="mq-track"><span id="mqtext"></span></div></div>
+  </section>
+
+  <section class="transcript" id="transcript" role="log" aria-live="off" hidden></section>
+  <div class="visually-hidden" id="announce" aria-live="polite"></div>
+</main>
+
+<footer class="composer-wrap">
+  <form class="composer" id="composer">
+    <textarea id="input" rows="1" data-i18n-ph="ph" placeholder="Ask a question…" aria-label="Ask a question"></textarea>
+    <button type="submit" class="send" id="sendBtn" aria-label="Send"><svg width="16" height="16"><use href="#i-arrow"/></svg></button>
+  </form>
+  <p class="hint" id="hint" data-i18n="hint">Enter to send · Shift+Enter for a new line</p>
+  <p class="foot">
+    <span data-i18n="foot1">Unofficial demo for a technical assessment · Informational only, not an offer · Prices and specifications are indicative and may change.</span>
+    <span class="foot-meta" id="footMeta"></span>
+  </p>
+</footer>
+
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Source" hidden>
+  <div class="drawer-head"><span class="label" id="dwTitle">SOURCE</span><button class="icon-btn" id="dwClose" aria-label="Close"><svg width="14" height="14"><use href="#i-close"/></svg></button></div>
+  <div class="drawer-body" id="dwBody"></div>
+</aside>
+<div class="scrim" id="scrim" hidden></div>
+
+<script src="/ui/i18n.js"></script>
+<script src="/ui/app.js"></script>
 </body>
 </html>

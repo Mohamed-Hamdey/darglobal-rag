@@ -4,145 +4,150 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
-import sqlite3
 import json
-from datetime import datetime
+from app.config import INDEX_PATH, DATA_DATE
+from app.retrieval.store import retrieve, get_chunk, counts
+from app.retrieval.router import route
+from app.retrieval.facts import listing_facts, facts_to_text
+from app.llm.prompts import SYSTEM, build_context, citations_from
+from app.llm.client import stream, verify_models
+from app.llm.guard import check
+from app.llm.fallback import sources_only
+from app.api import cache, ratelimit
 
-from app.config import INDEX_PATH, LLM_MODELS
-from app.retrieval.store import retrieve_context
-from app.llm.client import stream_llm_response
+app = FastAPI(title="DarGlobal × Wasalt RAG")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-app = FastAPI(title="DarGlobal x Wasalt RAG API")
-
-# 1. Mount static UI files
 UI_DIR = Path(__file__).parent / "ui"
 app.mount("/ui", StaticFiles(directory=str(UI_DIR)), name="ui")
 
-# 2. Serve index.html at root
+CHAIN: list[str] = []
+
+@app.on_event("startup")
+def _boot():
+    global CHAIN
+    cache.load()
+    CHAIN = verify_models()
+    print(f"[startup] model chain: {CHAIN}")
+
+def ev(obj): 
+    return f"data: {json.dumps(obj, ensure_ascii=False)}\n\n"
+
 @app.get("/")
-def read_root():
+def root(): 
     return FileResponse(str(UI_DIR / "index.html"))
 
-# 3. CORS Middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-SYSTEM_PROMPT = """You are a helpful, factual research assistant for DarGlobal and Wasalt real estate data.
-RULES:
-1. Answer ONLY using the provided CONTEXT. If the context doesn't have the answer, say "I couldn't find this in the collected data."
-2. NEVER calculate, estimate, or convert prices. Quote figures exactly as they appear in the context with their currency.
-3. Always cite your sources using [1], [2], etc., corresponding to the chunk numbers in the context.
-4. Keep answers concise, professional, and in the same language as the user's question (English or Arabic).
-5. Add a brief disclaimer: "Figures are indicative and subject to change."
-"""
-
 @app.get("/api/health")
-def health():
-    return {"status": "ok", "timestamp": datetime.now().isoformat()}
+def health(): 
+    return {"ok": True}
 
 @app.get("/api/meta")
 def meta():
-    conn = sqlite3.connect(INDEX_PATH)
-    cursor = conn.cursor()
-    cursor.execute("SELECT COUNT(*) FROM chunks_fts")
-    total_chunks = cursor.fetchone()[0]
-    conn.close()
+    c = counts()
     return {
-        "models": LLM_MODELS,
-        "data_date": "2026-11-19",
-        "counts": {"total_chunks": total_chunks}
+        "model": CHAIN[0] if CHAIN else None, 
+        "models": CHAIN, 
+        "data_date": DATA_DATE,
+        "pages_indexed": c["darglobal"], 
+        "wasalt_listings": c["wasalt"],
+        "sources": 2, 
+        "chunks": c["chunks"], 
+        "budget_remaining": ratelimit.remaining()
     }
 
+@app.get("/api/source/{chunk_id}")
+def source(cid: str):
+    c = get_chunk(cid)
+    if not c: 
+        return JSONResponse({"error": "not found"}, 404)
+    return {k: c.get(k) for k in ("title", "company", "url", "scraped_at", "page_type", "city", "country", "language")} | {"text_display": c["text_display"]}
+
 @app.post("/api/chat")
-async def chat(request: Request):
-    body = await request.json()
-    message = body.get("message", "").strip()
-    source_filter = body.get("source", "both")
+async def chat(req: Request):
+    body = await req.json()
+    msg = (body.get("message") or "").strip()
+    source_f = body.get("source", "both")
+    lang = body.get("lang", "auto")
     
-    if not message:
-        return JSONResponse({"error": "Message is required"}, status_code=400)
+    if not msg: 
+        return JSONResponse({"error": "message required"}, 400)
 
-    # 1. Retrieve
-    retrieval_result = retrieve_context(message, source_filter=source_filter, k=5)
-    chunks = retrieval_result["chunks"]
-    facts = retrieval_result["facts"]
-    
-    # 2. Format Context (may be empty)
-    context_parts = []
-    if facts:
-        context_parts.append("### PRECOMPUTED FACTS:")
-        for i, f in enumerate(facts):
-            context_parts.append(f"[F{i+1}] {f.get('category')} in {f.get('city')}: "
-                                 f"Count={f.get('count')}, Avg Price={f.get('avg_price')} {f.get('currency')}")
-    if chunks:
-        context_parts.append("### PASSAGES:")
-        for i, c in enumerate(chunks):
-            context_parts.append(f"[{i+1}] {c['company']} | {c['title']} | {c.get('city','N/A')}\n"
-                                 f"URL: {c['url']}\nText: {c['text_display'][:800]}...")
-    context_str = "\n\n".join(context_parts)
+    ip = req.headers.get("x-forwarded-for", req.client.host).split(",")[0]
+    # Use "auto" for lang in cache key to match seed_cache.py
+    ck = cache.key(msg, source_f, "auto")
+    hit = cache.get(ck)
 
-    # 3. Stream (works even with empty context → model will refuse per system prompt)
-    async def event_generator():
-        yield f"data: {json.dumps({'type': 'meta', 'model': LLM_MODELS[0]})}\n\n"
-        if not context_str:
-            # Skip the LLM entirely: save quota, guarantee instant graceful refusal
-            msg = ("I couldn't find this in the collected data. Try asking about "
-                   "DarGlobal projects (e.g. Trump Tower Jeddah, AIDA, Aston Martin) "
-                   "or Wasalt listings by city. "
-                   "Figures are indicative and subject to change.")
-            yield f"data: {json.dumps({'type': 'token', 'content': msg})}\n\n"
-            yield f"data: {json.dumps({'type': 'citations', 'data': []})}\n\n"
-            yield f"data: {json.dumps({'type': 'done'})}\n\n"
-            return
-        full_answer = []
-        async for token in stream_llm_response(SYSTEM_PROMPT, message, context_str):
-            full_answer.append(token)
-            yield f"data: {json.dumps({'type': 'token', 'content': token})}\n\n"
-        citations = [{"id": i+1, "title": c["title"], "company": c["company"],
-                      "url": c["url"], "scraped_at": c["scraped_at"]} for i, c in enumerate(chunks)]
-        yield f"data: {json.dumps({'type': 'citations', 'data': citations})}\n\n"
-        yield f"data: {json.dumps({'type': 'done'})}\n\n"
+    # Router + retrieval
+    r = route(msg)
+    facts = listing_facts(**{k: v for k, v in r["entities"].items() if k in ("city", "purpose", "property_type")}) if r["intent"] == "numeric_stats" else []
+    # Fetch more chunks if the user is asking for a list or statistics
+    k_val = 10 if r["intent"] in ("listing_search", "numeric_stats") else 5
+    chunks = retrieve(msg, source_f, k=k_val)
+    ctx = build_context(facts_to_text(facts), chunks)
 
-    # 2. Format Context
-    context_parts = []
-    if facts:
-        context_parts.append("### PRECOMPUTED FACTS:")
-        for i, f in enumerate(facts):
-            context_parts.append(f"[F{i+1}] {f.get('category')} in {f.get('city')}: Count={f.get('count')}, Avg Price={f.get('avg_price')} {f.get('currency')}")
+    async def gen():
+        try:
+            if hit:
+                yield ev({"type": "meta", "model": hit.get("model", "cache"), "cached": True})
+                yield ev({"type": "token", "content": hit["answer"]})
+                yield ev({"type": "citations", "data": hit["citations"]})
+                yield ev({"type": "done"})
+                return
+
+            # GUARANTEED SSE FALLBACK (No JSONResponse!)
+            if not chunks and not facts:
+                yield ev({"type": "meta", "model": None, "cached": False})
+                yield ev({"type": "token", "content": sources_only([])})
+                yield ev({"type": "citations", "data": []})
+                yield ev({"type": "done"})
+                return
+
+            if not ratelimit.per_ip_ok(ip):
+                yield ev({"type": "warning", "content": "Rate limit reached — showing sources only."})
+                yield ev({"type": "token", "content": sources_only(chunks)})
+                yield ev({"type": "citations", "data": citations_from(chunks)})
+                yield ev({"type": "done"})
+                return
+
+            if not ratelimit.budget_ok() or not CHAIN:
+                yield ev({"type": "warning", "content": "Live answers limited — showing sources only."})
+                yield ev({"type": "token", "content": sources_only(chunks)})
+                yield ev({"type": "citations", "data": citations_from(chunks)})
+                yield ev({"type": "done"})
+                return
+
+            ratelimit.spend()
+            user_msg = ctx + "\n\nQUESTION:\n" + msg
+            full, used_model = [], None
             
-    context_parts.append("### PASSAGES:")
-    for i, c in enumerate(chunks):
-        context_parts.append(f"[{i+1}] {c['company']} | {c['title']} | {c.get('city', 'N/A')}\nURL: {c['url']}\nText: {c['text_display'][:800]}...")
-        
-    context_str = "\n\n".join(context_parts)
-    
-    # 3. Stream LLM
-    async def event_generator():
-        # Send metadata first
-        yield f"data: {json.dumps({'type': 'meta', 'model': LLM_MODELS[0]})}\n\n"
-        
-        full_answer = []
-        async for token in stream_llm_response(SYSTEM_PROMPT, message, context_str):
-            full_answer.append(token)
-            yield f"data: {json.dumps({'type': 'token', 'content': token})}\n\n"
-            
-        # Build citations
-        citations = []
-        for i, c in enumerate(chunks):
-            citations.append({
-                "id": i + 1,
-                "title": c["title"],
-                "company": c["company"],
-                "url": c["url"],
-                "scraped_at": c["scraped_at"]
-            })
-            
-        yield f"data: {json.dumps({'type': 'citations', 'data': citations})}\n\n"
-        yield f"data: {json.dumps({'type': 'done'})}\n\n"
+            try:
+                async for model, tok in stream(CHAIN, SYSTEM, user_msg):
+                    if not tok: continue
+                    used_model = model
+                    if not full:
+                        yield ev({"type": "meta", "model": model, "cached": False})
+                    full.append(tok)
+                    yield ev({"type": "token", "content": tok})
+            except Exception as e:
+                yield ev({"type": "warning", "content": f"Model unavailable: {e}"})
+                yield ev({"type": "token", "content": sources_only(chunks)})
 
-    return StreamingResponse(event_generator(), media_type="text/event-stream")
+            answer = "".join(full)
+            bad = check(answer, ctx)
+            if bad:
+                yield ev({"type": "warning", "content": "⚠ Some figures couldn't be verified."})
+                
+            cits = citations_from(chunks)
+            yield ev({"type": "citations", "data": cits})
+            
+            if answer:
+                cache.set(ck, {"answer": answer, "citations": cits, "model": used_model})
+                
+            yield ev({"type": "done"})
+            
+        except Exception as fatal:
+            import traceback
+            traceback.print_exc()
+            yield ev({"type": "error", "content": f"{type(fatal).__name__}: {fatal}"})
+
+    return StreamingResponse(gen(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})

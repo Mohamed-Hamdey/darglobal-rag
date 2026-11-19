@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: dar-wasalt-rag
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: DAILY_LLM_BUDGET
+        value: "40"
+      - key: PER_IP_LIMIT
+        value: "8"
+      - key: DATA_DATE
+        value: "2026-11-19"

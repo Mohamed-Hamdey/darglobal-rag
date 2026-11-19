@@ -1,59 +1,48 @@
 # app/llm/client.py
-import httpx
-import json
-from typing import AsyncGenerator
+import httpx, json
 from app.config import OPENROUTER_API_KEY, LLM_MODELS
 
-async def stream_llm_response(system_prompt: str, user_message: str, context_str: str) -> AsyncGenerator[str, None]:
-    if not OPENROUTER_API_KEY:
-        yield "⚠️ OpenRouter API key is missing. Showing sources only."
-        return
+HEADERS = lambda: {"Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                   "HTTP-Referer": "https://darglobal-assessment.onrender.com",
+                   "X-Title": "DarGlobal x Wasalt RAG", "Content-Type": "application/json"}
 
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": f"CONTEXT:\n{context_str}\n\nQUESTION:\n{user_message}"}
-    ]
-    
-    # Try models in order
-    for model in LLM_MODELS:
+def verify_models() -> list[str]:
+    """Keep only :free models currently available. Never hard-code a dead ID."""
+    try:
+        r = httpx.get("https://openrouter.ai/api/v1/models", timeout=15)
+        ids = {m["id"] for m in r.json().get("data", [])}
+        chain = [m for m in LLM_MODELS if m in ids]
+        return chain or LLM_MODELS
+    except Exception:
+        return LLM_MODELS
+
+async def stream(chain: list[str], system: str, user: str):
+    """Yield tokens. On 429/5xx/timeout → next model. All fail → raise."""
+    last_err = None
+    for model in chain:
         try:
-            async with httpx.AsyncClient(timeout=30.0) as client:
-                async with client.stream(
-                    "POST",
-                    "https://openrouter.ai/api/v1/chat/completions",
-                    headers={
-                        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                        "HTTP-Referer": "https://darglobal.co.uk",
-                        "X-Title": "DarGlobal RAG Demo",
-                        "Content-Type": "application/json"
-                    },
-                    json={
-                        "model": model,
-                        "messages": messages,
-                        "temperature": 0.1,
-                        "stream": True
-                    }
-                ) as response:
-                    if response.status_code != 200:
-                        error_text = await response.aread()
-                        print(f"Model {model} failed: {response.status_code} - {error_text}")
-                        continue # Try next model
-                        
-                    async for line in response.aiter_lines():
-                        if line.startswith("data: "):
-                            data = line[6:]
-                            if data.strip() == "[DONE]":
-                                return
-                            try:
-                                chunk = json.loads(data)
-                                content = chunk["choices"][0]["delta"].get("content", "")
-                                if content:
-                                    yield content
-                            except json.JSONDecodeError:
-                                pass
-                    return # Success, exit loop
+            async with httpx.AsyncClient(timeout=45) as c:
+                async with c.stream("POST", "https://openrouter.ai/api/v1/chat/completions",
+                                    headers=HEADERS(),
+                                    json={"model": model, "temperature": 0.1, "stream": True,
+                                          "messages": [{"role": "system", "content": system},
+                                                       {"role": "user", "content": user}]}) as resp:
+                    if resp.status_code != 200:
+                        last_err = f"{model}: HTTP {resp.status_code}"; continue
+                    async for line in resp.aiter_lines():
+                        if not line.startswith("data: "): 
+                            continue
+                        d = line[6:]
+                        if d.strip() == "[DONE]": 
+                            return
+                        try:
+                            chunk_data = json.loads(d)
+                            content = chunk_data["choices"][0]["delta"].get("content")
+                            if content:  # ONLY yield if content is a valid string
+                                yield (model, content)
+                        except Exception: 
+                            pass
+                    return
         except Exception as e:
-            print(f"Exception with model {model}: {e}")
-            continue
-            
-    yield "\n\n⚠️ All AI models are currently busy or rate-limited. Please rely on the cited sources below."
+            last_err = f"{model}: {e}"
+    raise RuntimeError(f"All models failed. Last: {last_err}")
