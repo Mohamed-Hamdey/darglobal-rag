@@ -304,18 +304,21 @@ docker run --rm -p 8000:8000 --memory=512m --env-file .env dar-rag
 │   ├── main.py               # FastAPI app, SSE streaming, routing
 │   ├── config.py             # environment variables, model chain
 │   ├── retrieval/            # FTS5 store, gazetteer expansion, aggregate lookup
+|   ├── core/
+|   ├── api/
 │   ├── llm/                  # OpenRouter client, prompts, figure verifier, fallback
 │   └── ui/                   # vanilla HTML/CSS/JS interface (self-contained)
 ├── ingestion/                # acquisition, normalisation, chunking, index build
 ├── data/
 │   ├── gazetteer.json        # EN↔AR aliases: cities, districts, brands, projects
 │   ├── processed/            # cleaned *.jsonl datasets (committed)
+│   ├── raw/
 │   └── eval/questions.jsonl  # 35 evaluation questions
 ├── scripts/                  # benchmark, evaluation, smoke tests
-├── results/                  # metrics.json and metrics.md from the latest run
 ├── assets/                   # README header image and UI screenshots
 ├── index/                    # built SQLite database (generated, gitignored)
 ├── Dockerfile                # multi-stage build; index created at build time
+├── .dockerignore
 ├── render.yaml               # Render blueprint
 └── requirements.txt          # runtime dependencies only
 ```
